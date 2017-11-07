@@ -1,8 +1,11 @@
-#React Composable Forms
+React Composable Forms
+=
 
-####This is a composable, reusable form framework for react, built mostly out of boredem and neccesity.
+This is a composable, reusable form framework for react, built mostly out of boredem and neccesity.
+====
 
-###Features done and planned:
+Features done and planned:
+====
 
 - [x] Text
 - [ ] Email
@@ -20,7 +23,7 @@
 - [ ] PropTypes
 - [ ] Documentation
 
-##Quick Start
+## Quick Start
 
 ``` ecmascript 6
 yarn add react-composable-forms
@@ -54,40 +57,40 @@ You can use the each component by itself as well, outside of a `Form`, by supply
 
 `updated` has a structure the same as `[name]: value`.
 
-##Components
+## Components
 
-###`Form`
+### `Form`
 
 Manages the state of children Form components. 
 
 You can have whatever HTML structure you want, the `Form` component looks for components that need managing and attaches handlers.
 
-#####Props
+##### Props
 
 `Function: onSubmit(values)` - Function that receives the form's state on submit. To submit, simple ensure there is a 
 `Button` with `submit` set to `true` in the form, or dispatch a `submit` event. The state is based on `[name]: value` for the form elements.
 
 `String: customClassName` - [Optional] A custom css class for the `form` HTML element. The class `composable-form` is on the element by default.
 
-#####Usage
+##### Usage
 
 See the Example above.
 
-###`Text`
+### `Text`
 
 A simple Text input. Can be used outside of a `Form` component.
 
-#####Props
+##### Props
 
 `String: name` - Name of the input field.
 `String: placeholder` - [Optional] Placeholder for input. Defaults to 'Enter a Value'.
 `String: className` - [Optional] A custom css class for the `input` HTML element. The class `form-input` is on the element by default.
 
-#####Props if not a child of `Form`
+##### Props if not a child of `Form`
 `String: value` - The current value of the input.
 `Function: onChange({event, target, name, value, updated})` - Change handler for when input is entered.
 
-#####Usage
+##### Usage
 
 See the example above.
 
