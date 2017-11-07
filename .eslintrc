@@ -1,0 +1,37 @@
+// Need eslint, eslint-plugin-react, eslint-babel installed
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    },
+    "sourceType": "module"
+  },
+  "rules": {
+    "eqeqeq": "error",
+    "array-bracket-spacing": ["error","never"],
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "comma-dangle": ["error", "never"],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "jsx-quotes": ["error", "prefer-double"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "arrow-parens": ["error", "always"],
+    "prefer-arrow-callback": "warn",
+    "prefer-spread": "error",
+    "sort-imports": "warn",
+    "react/prop-types": 0,
+    "no-unused-vars": "warn",
+    "no-console": "off"
+  },
+  "plugins": [
+    "react"
+  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"]
+}
