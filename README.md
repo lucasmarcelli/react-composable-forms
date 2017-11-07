@@ -1,8 +1,8 @@
 React Composable Forms
 =
 
-This is a composable, reusable form framework for react, built mostly out of boredem and neccesity.
-====
+##### This is a composable, reusable form framework for react, built mostly out of boredem and neccesity.
+
 
 Features done and planned:
 ====
