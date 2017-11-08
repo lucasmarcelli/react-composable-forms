@@ -1,4 +1,4 @@
-import { Button, Checkbox, Label } from '../';
+import { Button, Checkbox, Label, Select } from '../';
 import React, { Component } from 'react';
 
 class Form extends Component {
@@ -7,15 +7,16 @@ class Form extends Component {
     super(props);
 
     // Set state full of values.
-    let initialValues = { ...this.doInitial(props.children), ...this.props.initialValues };
+    this.initialValues = { ...this.doInitial(props.children), ...this.props.initialValues };
     this.state = {
-      values: initialValues,
+      values: this.initialValues,
       name: this.props.name ? this.props.name : undefined
     };
 
     // Bind Functions
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleReset = this.handleReset.bind(this);
     this.doInitial = this.doInitial.bind(this);
     this.renderChildren = this.renderChildren.bind(this);
     this.populate = this.populate.bind(this);
@@ -26,7 +27,8 @@ class Form extends Component {
       // Attach submit handler to form and render children
       <form name={this.props.name}
             className={'composable-form ' + (this.props.customClassName)}
-            onSubmit={(event) => this.handleSubmit(event)}>
+            onSubmit={(event) => this.handleSubmit(event)}
+            onReset={(event) => this.handleReset(event)}>
         {this.renderChildren(this.props.children)}
       </form>
     );
@@ -56,6 +58,13 @@ class Form extends Component {
     event.preventDefault();
     let toreturn = this.props.name ? { [this.props.name]: this.state.values } : this.state.values;
     this.props.onSubmit(toreturn);
+  }
+
+  // Reset Handler
+  handleReset(event) {
+    event.preventDefault();
+    let toreturn = this.props.name ? { [this.props.name]: this.state.values } : this.state.values;
+    this.setState({ values: this.initialValues }, () => {this.props.onReset ? this.props.onReset(toreturn) : null });
   }
 
   // Render the children with onChange props attached.
@@ -101,7 +110,11 @@ doInitial(children) {
   React.Children.forEach(children, (child) => {
     if(!child) return;
     if (child.props.attachOnChange) {
-      initialValues[child.props.name] = '';
+      if(child.type === Select && child.props.multiple ){
+        initialValues[child.props.name] = [];
+      } else {
+        initialValues[child.props.name] = '';
+      }
     } else if (child.props.attachOnClick) {
       initialValues[child.props.name] = false;
     } else if (child.props.children) {

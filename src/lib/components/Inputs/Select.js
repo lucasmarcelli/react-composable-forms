@@ -15,7 +15,7 @@ class Select extends Component {
               value={this.props.value}
               onChange={(event) => this.handleChange(event)}
               multiple={this.props.multiple}>
-        {(!this.props.noDefault ? <option value={this.props.defaultVal || (this.props.multiple ? [] : '')}>{this.props.defaultText || 'Select an Option'}</option> : null)}
+        {(this.props.multiple || this.props.noDefault) ? null : <option value={this.props.defaultVal}>{this.props.defaultText}</option>}
         {this.renderOptions()}
       </select>
     )
@@ -61,5 +61,12 @@ class Select extends Component {
     }
   }
 }
+
+Select.defaultProps = {
+  customClassName: '',
+  attachOnChange: true,
+  defaultText: 'Select an Option'
+};
+
 
 export default Select;

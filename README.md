@@ -13,9 +13,9 @@ Features done and planned:
 - [x] Checkbox
 - [ ] Radio Buttons
 - [ ] Email Field
-- [ ] Select w/ multiple
+- [x] Select w/ multiple
 - [x] Buttons
-- [ ] Reset Button
+- [x] Reset Button
 - [x] Submit Button    
 - [ ] Number Field
 - [x] Text Area
@@ -81,6 +81,8 @@ Don't go too complex yet in structure. Sub-forms/Custom Components is in the 1.0
 `Function: onSubmit(values)` - Function that receives the form's state on submit. To submit, simple ensure there is a 
 `Button` with `submit` set to `true` in the form, or dispatch a `submit` event. The state is based on `[name]: value` for the form elements.
 
+`Function: onReset(values)` - [Optional] Function that will receive the `Form` state on a reset event. Form will reset without providing this, it's only to see what the state was. Use it with a `Button` that has the prop `reset` set to truthy.
+
 `String: customClassName` - [Optional] A custom css class for the `form` HTML element. The class `composable-form` is on the element by default.
 
 `Function: onChange` - [Optional] This callback will fire on every change in the form, with all the form's contents.
@@ -130,8 +132,7 @@ A simple Text input. Can be used outside of a `Form` component.
 
 `Object: label` - [Optional] An object specifying a label for the `Text`. Format is:
 
-```
-ecmascript 6
+``` ecmascript 6
 {
   text: 'Label Text',
   labelClass: 'custom-css-class',
@@ -168,6 +169,32 @@ A checkbox, with label.
 ##### Usage
 
 See the demo.
+
+### `Button`
+
+Button, with options for ease of use.
+
+##### Props
+
+`boolean: submit` - [Optional] Setting to truthy will make this button emit a submit event, which the form will catch, and trigger the `onSubmit` function for `Form`.
+
+`boolean: reset` - [Optional] Setting to truthy will make this button emit a reset event, which the form will catch, and reset to initial values. 
+
+`String: name` - [Optional] Name of the button, attaches to the event.
+
+`String: text` - [Optional] Defaults to 'Click'. Text on the button.
+
+`String: customClassName` - [Optional] CSS className.
+
+##### Props if not a child of `Form` or if not `submit` or `reset`
+
+`Function: onClick(event)` - If you have a non-submit or reset button in a `Form` or you are using it ouside a `Form`, you must supply the click handler yourself. It returns the event as given.
+
+`String: name` - This becomes required in this case, or you won't know which button was clicked.
+
+##### Usage
+
+See Demo.
 
 Docs are incomplete still sorry <3
 

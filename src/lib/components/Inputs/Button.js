@@ -6,10 +6,9 @@ class Button extends Component {
     return (
       <button name={this.props.name}
               className={'form-button' + this.props.customClassName}
-              type={(this.props.submit ? 'submit' : 'button')}
-              onClick={(this.props.onClick ? (event) => this.props.onClick({ event: event, clicked: this.props.name }) : () => {
-              })}
-      >{this.props.text || (this.props.submit ? 'Submit' : 'Click!')}</button>
+              type={(this.props.submit ? 'submit' : (this.props.reset ? 'reset' : 'button'))}
+              onClick={(this.props.onClick ? (event) => this.props.onClick(event) : () => {})}
+      >{this.props.text || (this.props.submit ? 'Submit' : (this.props.reset ? 'Reset' : 'Click'))}</button>
     );
   }
 
@@ -17,7 +16,6 @@ class Button extends Component {
 
 Button.defaultProps = {
   customClassName: '',
-  checked: false,
   submit: false
 };
 
