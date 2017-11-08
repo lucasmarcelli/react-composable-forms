@@ -3,6 +3,7 @@ React Composable Forms
 
 ##### This is a composable, reusable form framework for react, built mostly out of boredem and neccesity.
 
+###### This is also very, very alpha :)
 
 Features done and planned:
 ====
@@ -22,11 +23,13 @@ Features done and planned:
 - [ ] Optional base CSS
 - [ ] PropTypes
 - [ ] Documentation
+- [ ] Add new elements dynamically
 
 ## Quick Start
 
+`yarn add react-composable-forms`
+
 ``` ecmascript 6
-yarn add react-composable-forms
 import Form, { Text, Button } from 'react-composable-forms';`
 
 ...
@@ -72,6 +75,7 @@ You can have whatever HTML structure you want, the `Form` component looks for co
 
 `String: customClassName` - [Optional] A custom css class for the `form` HTML element. The class `composable-form` is on the element by default.
 
+`Function: onChange` - [Optional] This callback will fire on every change in the form, with all the form's contents.
 ##### Usage
 
 See the Example above.
@@ -83,11 +87,14 @@ A simple Text input. Can be used outside of a `Form` component.
 ##### Props
 
 `String: name` - Name of the input field.
+
 `String: placeholder` - [Optional] Placeholder for input. Defaults to 'Enter a Value'.
+
 `String: className` - [Optional] A custom css class for the `input` HTML element. The class `form-input` is on the element by default.
 
 ##### Props if not a child of `Form`
 `String: value` - The current value of the input.
+
 `Function: onChange({event, target, name, value, updated})` - Change handler for when input is entered.
 
 ##### Usage
