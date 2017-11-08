@@ -16,7 +16,7 @@ Features done and planned:
 - [x] Select w/ multiple
 - [x] Buttons
 - [ ] Number Field
-- [ ] Text Area
+- [x] Text Area
 - [ ] Custom Components
 - [x] Form to manage state
 - [ ] Javascript Validators

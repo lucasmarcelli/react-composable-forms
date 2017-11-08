@@ -1,4 +1,4 @@
-import { Button, Checkbox, Label, Select, Text } from '../';
+import { Button, Checkbox, Label, Select, Text, Textarea } from '../';
 import React, { Component } from 'react';
 
 class Form extends Component {
@@ -62,6 +62,7 @@ class Form extends Component {
       switch(child.type){
         case Text:
         case Select:
+        case Textarea:
           if(child.props.label) {
             return (
               <Label {...child.props.label} >
@@ -115,6 +116,7 @@ class Form extends Component {
       switch(child.type){
         case Select:
         case Text:
+        case Textarea:
           initialValues[child.props.name] = '';
           break;
         case Checkbox:

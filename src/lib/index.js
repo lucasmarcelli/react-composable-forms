@@ -4,6 +4,7 @@ import Form from './components/Form';
 import Label from './components/Structure/Label';
 import Select from './components/Inputs/Select';
 import Text from './components/Inputs/Text';
+import Textarea from './components/Inputs/Textarea';
 
 export default Form;
 export {
@@ -11,6 +12,7 @@ export {
   Checkbox,
   Label,
   Select,
-  Text
+  Text,
+  Textarea
 };
 

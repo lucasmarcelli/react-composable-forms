@@ -1,4 +1,4 @@
-import Form, { Button, Checkbox, Text } from '../lib';
+import Form, { Button, Checkbox, Text, Textarea } from '../lib';
 import React, { Component } from 'react';
 
 class App extends Component {
@@ -21,6 +21,9 @@ class App extends Component {
             name="test"
           />
       </div>
+      <Textarea placeholder="Some Texxt"
+                name="testtextarea"
+      />
       <Text placeholder="Another"
             name="test2"
             label={{
