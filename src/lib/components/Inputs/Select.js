@@ -10,7 +10,7 @@ class Select extends Component {
 
   render() {
     return (
-      <select className={'form-select ' + (this.props.customClassName || '')}
+      <select className={'form-select ' + this.props.customClassName}
               name={this.props.name}
               value={this.props.value}
               onChange={(event) => this.handleChange(event)}

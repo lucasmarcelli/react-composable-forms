@@ -8,13 +8,15 @@ React Composable Forms
 Features done and planned:
 ====
 
-- [ ] Populate
+- [x] Initial Values / Populate
 - [x] Text
 - [x] Checkbox
 - [ ] Radio Buttons
 - [ ] Email Field
-- [x] Select w/ multiple
+- [ ] Select w/ multiple
 - [x] Buttons
+- [ ] Reset Button
+- [x] Submit Button    
 - [ ] Number Field
 - [x] Text Area
 - [ ] Custom Components
@@ -70,7 +72,9 @@ You can use the each component by itself as well, outside of a `Form`, by supply
 
 Manages the state of children Form components. 
 
-You can have whatever HTML structure you want, the `Form` component looks for components that need managing and attaches handlers.
+You can have whatever HTML structure you want, the `Form` component looks for components that need managing and attaches handlers. 
+
+Don't go too complex yet in structure. Sub-forms/Custom Components is in the 1.0 Roadmap - this will make it really modular.
 
 ##### Props
 
@@ -80,6 +84,34 @@ You can have whatever HTML structure you want, the `Form` component looks for co
 `String: customClassName` - [Optional] A custom css class for the `form` HTML element. The class `composable-form` is on the element by default.
 
 `Function: onChange` - [Optional] This callback will fire on every change in the form, with all the form's contents.
+
+`String: name` - [Optional] Named forms will return their output in an object like: `{[name]: values}`
+
+`Object: initialValues` - [Optional] An object that matches the state of the form (ie, what the returned object looks like internally `{[name]: value}`) Can be partial.
+
+**NOTE:** This only works if you have the initial data *before* you construct the Form. If you need to alter the data after, or you're waiting on a network request or something, see the `Refs - Populate` below.
+
+##### Refs
+
+There is some utility refs provided for simplicity. 
+
+`Function: populate(data)` - Populate will update the form the same way the `initialValues` prop does. Partials allowed. Object must be the same structure as the Form's state, like in `initialValues`.
+
+To use the ref on your form:
+
+``` ecmascript 6
+render() {
+    <Form onSubmit={callback}
+          ref={({ populate }) => this.populate = populate}
+          >
+          ...
+     </Form>     
+}
+
+// Some time after construction of the Form, data becomes available, so call:
+this.populate(data);
+```
+
 ##### Usage
 
 See the Demo or Example.
@@ -131,7 +163,7 @@ A checkbox, with label.
 ##### Props if not a child of `Form`
 `boolean: checked` - The current checked status of the `Checkbox`.
 
-`Function: onChange({event, target, name, value, updated})` - Change handler for when checkbox changes.
+`Function: onClick({event, target, name, value, updated})` - Click handler for when checkbox changes.
 
 ##### Usage
 

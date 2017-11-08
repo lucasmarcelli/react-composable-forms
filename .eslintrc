@@ -28,7 +28,8 @@
     "sort-imports": "warn",
     "react/prop-types": 0,
     "no-unused-vars": "warn",
-    "no-console": "off"
+    "no-console": "off",
+    "object-curly-spacing": [2, "always", {"objectsInObjects": false}]
   },
   "plugins": [
     "react"

@@ -6,22 +6,24 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      val: 'woo'
+      val: false
     }
   }
 
   render(){
-    //setTimeout(() => {this.setState({val: 'asdf'})}, 1500);
     return (
       <div>
-    <Form onSubmit={console.log}>
+    <Form onSubmit={console.log}
+          initialValues={{ test: 'initial value' }}
+          >
       <div>
+        {/* You can use whatever structure you want. Don't go too crazy deep though... yet */}
         <div>
       <Text placeholder="Enter a value"
             name="test"
           />
       </div>
-      <Textarea placeholder="Some Texxt"
+      <Textarea placeholder="Some Text"
                 name="testtextarea"
       />
       <Text placeholder="Another"

@@ -1,6 +1,6 @@
 {
   "name": "react-composable-forms",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Composable forms for react.",
   "main": "build/index.js",
   "repository": "git@github.com:lucasmarcelli/react-composable-forms.git",
@@ -94,7 +94,9 @@
     "build": "node scripts/build.js && cp package.json build/",
     "test": "node scripts/test.js --env=jsdom"
   },
-  "dependencies": {},
+  "dependencies": {
+    "prop-types": "^15.6.0"
+  },
   "babel": {
     "presets": [
       "react-app"

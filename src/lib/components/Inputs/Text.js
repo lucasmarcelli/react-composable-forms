@@ -5,7 +5,7 @@ class Text extends Component {
   render() {
     return <input name={this.props.name}
                   type="text"
-                  className={'form-input ' + (this.props.customClassName || '')}
+                  className={'form-input ' + this.props.customClassName}
                   value={this.props.value}
                   placeholder={this.props.placeholder}
                   onChange={(event) => this.props.onChange({
@@ -19,5 +19,11 @@ class Text extends Component {
                   })}/>;
   }
 }
+
+Text.defaultProps = {
+  customClassName: '',
+  value: '',
+  attachOnChange: true
+};
 
 export default Text;
