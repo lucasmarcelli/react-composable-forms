@@ -1,11 +1,15 @@
-import Button from './components/Button';
+import Button from './components/Inputs/Button';
+import Checkbox from './components/Inputs/Checkbox';
 import Form from './components/Form';
-import Select from './components/Select';
-import Text from './components/Text';
+import Label from './components/Structure/Label';
+import Select from './components/Inputs/Select';
+import Text from './components/Inputs/Text';
 
 export default Form;
 export {
   Button,
+  Checkbox,
+  Label,
   Select,
   Text
 };

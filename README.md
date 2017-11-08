@@ -8,14 +8,17 @@ React Composable Forms
 Features done and planned:
 ====
 
+- [ ] Populate
 - [x] Text
-- [ ] Email
+- [x] Checkbox
+- [ ] Radio Buttons
+- [ ] Email Field
 - [x] Select w/ multiple
-- [x] Button
+- [x] Buttons
 - [ ] Number Field
 - [ ] Text Area
 - [ ] Custom Components
-- [x] Form
+- [x] Form to manage state
 - [ ] Javascript Validators
 - [ ] Custom Validators
 - [ ] Build Form from Config
@@ -24,6 +27,7 @@ Features done and planned:
 - [ ] PropTypes
 - [ ] Documentation
 - [ ] Add new elements dynamically
+- [x] Labels
 
 ## Quick Start
 
@@ -78,7 +82,7 @@ You can have whatever HTML structure you want, the `Form` component looks for co
 `Function: onChange` - [Optional] This callback will fire on every change in the form, with all the form's contents.
 ##### Usage
 
-See the Example above.
+See the Demo or Example.
 
 ### `Text`
 
@@ -90,7 +94,18 @@ A simple Text input. Can be used outside of a `Form` component.
 
 `String: placeholder` - [Optional] Placeholder for input. Defaults to 'Enter a Value'.
 
-`String: className` - [Optional] A custom css class for the `input` HTML element. The class `form-input` is on the element by default.
+`String: customClassName` - [Optional] A custom css class for the `input` HTML element. The class `form-input` is on the element by default.
+
+`Object: label` - [Optional] An object specifying a label for the `Text`. Format is:
+
+```
+ecmascript 6
+{
+  text: 'Label Text',
+  labelClass: 'custom-css-class',
+  textClass: 'custom-css-class'
+}
+```
 
 ##### Props if not a child of `Form`
 `String: value` - The current value of the input.
@@ -99,7 +114,28 @@ A simple Text input. Can be used outside of a `Form` component.
 
 ##### Usage
 
-See the example above.
+See the Demo or Example.
 
-Docs are incomplete sorry <3
+### `Checkbox`
+
+A checkbox, with label. 
+
+##### Props
+
+`String: name` - Name of the input field.
+
+`Object: label` - An object specifying a label for the `Checkbox`. See `Text` for structure.
+
+`String: customClassName` - [Optional] A custom css class for the `input` HTML element. The class `form-input` is on the element by default.
+
+##### Props if not a child of `Form`
+`boolean: checked` - The current checked status of the `Checkbox`.
+
+`Function: onChange({event, target, name, value, updated})` - Change handler for when checkbox changes.
+
+##### Usage
+
+See the demo.
+
+Docs are incomplete still sorry <3
 

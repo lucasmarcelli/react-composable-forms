@@ -1,6 +1,6 @@
 {
   "name": "react-composable-forms",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "Composable forms for react.",
   "main": "build/index.js",
   "repository": "git@github.com:lucasmarcelli/react-composable-forms.git",

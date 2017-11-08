@@ -1,5 +1,5 @@
+import { Button, Checkbox, Label, Select, Text } from '../';
 import React, { Component } from 'react';
-import { Button, Select, Text } from '../';
 
 class Form extends Component {
 
@@ -7,7 +7,7 @@ class Form extends Component {
     super(props);
 
     // Set state full of values.
-    let initialValues = this.doInitial(props.children);
+    let initialValues = {...this.doInitial(props.children), ...(this.props.initialValues || {})};
     this.state = {
       values: initialValues
     };
@@ -17,6 +17,13 @@ class Form extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.doInitial = this.doInitial.bind(this);
     this.renderChildren = this.renderChildren.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // If initial values are changed.
+    if(this.props.initialValues !== nextProps.initialValues) {
+      this.setState({values: {...this.state.values, ...nextProps.initialValues}});
+    }
   }
 
   render() {
@@ -30,7 +37,7 @@ class Form extends Component {
   }
 
   // Change Handler
-  handleChange({updated, event, target, value, name}) {
+  handleChange({updated}) {
     let { values } = { ...this.state };
     values = {...values, ...updated};
     // If you pass an onChange to the Form, it will fire at each change, while maintaining internal state.
@@ -47,6 +54,7 @@ class Form extends Component {
     this.props.onSubmit(this.state.values);
   }
 
+  /* eslint-disable no-case-declarations */
   // Render the children with onChange props attached.
   renderChildren(children) {
     return React.Children.map(children, (child) => {
@@ -54,10 +62,33 @@ class Form extends Component {
       switch(child.type){
         case Text:
         case Select:
-          return React.cloneElement(child, {
-            // Attach change handler to each of the components, will be generalized later.
-            onChange: this.handleChange
-          });
+          if(child.props.label) {
+            return (
+              <Label {...child.props.label} >
+                {React.cloneElement(child, {
+                  // Attach change handler to each of the components, will be generalized later.
+                  onChange: this.handleChange,
+                  value: this.state.values[child.props.name]
+                })}
+              </Label>
+            )
+          } else {
+            return React.cloneElement(child, {
+              // Attach change handler to each of the components, will be generalized later.
+              onChange: this.handleChange,
+              value: this.state.values[child.props.name]
+            });
+          }
+        case Checkbox:
+          return (
+            <Label {...child.props.label}>
+              {React.cloneElement(child, {
+                // Attach change handler to each of the components, will be generalized later.
+                onChange: this.handleChange,
+                checked: this.state.values[child.props.name]
+              })}
+            </Label>
+          );
         case Button:
           // Buttons don't need anything attached, the onClick is handled in the parent if it's not a submit.
           return child;
@@ -71,9 +102,12 @@ class Form extends Component {
       }
     });
   }
+  /* eslint-enable no-case-declarations */
 
   // Setting the initial state
   // TODO: If elements are added in after Construction, update state to relfect that.
+  // TODO: Allow initial values
+  // TODO: Allow setting values at any time
   doInitial(children) {
     let initialValues = {};
     // Map the names to the state, to track
@@ -82,6 +116,9 @@ class Form extends Component {
         case Select:
         case Text:
           initialValues[child.props.name] = '';
+          break;
+        case Checkbox:
+          initialValues[child.props.name] = false;
           break;
         case Button:
           break;
