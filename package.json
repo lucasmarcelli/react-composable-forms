@@ -1,10 +1,10 @@
 {
   "name": "react-composable-forms",
-  "version": "0.2.4",
+  "version": "0.3.5",
   "description": "Composable forms for react.",
   "main": "build/index.js",
   "repository": "git@github.com:lucasmarcelli/react-composable-forms.git",
-  "author": "lucas@marcelli.ca",
+  "author": "Lucas Marcelli <lucas@marcelli.ca>",
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "7.1.2",

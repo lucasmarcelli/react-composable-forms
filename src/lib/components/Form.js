@@ -7,7 +7,7 @@ class Form extends Component {
     super(props);
 
     // Set state full of values.
-    this.initialValues = { ...this.doInitial(props.children), ...this.props.initialValues };
+    this.initialValues = { ...this.doInitial(props.children), ...this.props.initialValues, ...this.props.values };
     this.state = {
       values: this.initialValues,
       name: this.props.name ? this.props.name : undefined
@@ -18,18 +18,17 @@ class Form extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.doInitial = this.doInitial.bind(this);
-    this.renderChildren = this.renderChildren.bind(this);
+    this.attachHandlers = this.attachHandlers.bind(this);
     this.populate = this.populate.bind(this);
   }
 
   render() {
     return (
-      // Attach submit handler to form and render children
       <form name={this.props.name}
             className={'composable-form ' + (this.props.customClassName)}
             onSubmit={(event) => this.handleSubmit(event)}
             onReset={(event) => this.handleReset(event)}>
-        {this.renderChildren(this.props.children)}
+        {this.attachHandlers(this.props.children)}
       </form>
     );
   }
@@ -46,7 +45,7 @@ class Form extends Component {
     values = { ...values, ...updated };
     // If you pass an onChange to the Form, it will fire at each change, while maintaining internal state.
     if (this.props.onChange) {
-      let toreturn = this.props.name ? { [this.props.name]: this.state.values } : this.state.values;
+      let toreturn = this.props.name ? { [this.props.name]: values } : values;
       this.setState({ values: values }, () => this.props.onChange(toreturn));
     } else {
       this.setState({ values: values });
@@ -64,24 +63,27 @@ class Form extends Component {
   handleReset(event) {
     event.preventDefault();
     let toreturn = this.props.name ? { [this.props.name]: this.state.values } : this.state.values;
-    this.setState({ values: this.initialValues }, () => {this.props.onReset ? this.props.onReset(toreturn) : null });
+    this.setState({ values: this.initialValues }, () => {
+      this.props.onReset ? this.props.onReset(toreturn) : null;
+    });
   }
 
   // Render the children with onChange props attached.
-  renderChildren(children) {
+  attachHandlers(children) {
     return React.Children.map(children, (child) => {
       if(!child) return;
+      if(!child.props) return child;
       // Check for type
-      if(child.type === Button) {
-        return child;
-      }
+      if(child.type === Button) return child;
       let handlerType = child.props.attachOnChange ? 'onChange' : 'onClick';
       let valueType = child.type === Checkbox ? 'checked' : 'value';
       if (child.props.attachOnChange || child.props.attachOnClick) {
-        let props = {
-            [handlerType]: this.handleChange,
-            [valueType]: this.state.values[child.props.name]
-        };
+        let props = { [handlerType]: this.handleChange };
+        if(child.props.hasSubComponents) {
+            props.values = this.state.values[child.props.name];
+        } else {
+            props[valueType] = this.state.values[child.props.name];
+        }
         const element = React.cloneElement(child, props);
         if(child.props.label) {
           return (
@@ -94,7 +96,7 @@ class Form extends Component {
         }
       } else {
         if (child.props.children) {
-          return this.renderChildren(child.props.children, child);
+          return this.attachHandlers(child.props.children, child);
         } else {
           return child;
         }
@@ -103,34 +105,33 @@ class Form extends Component {
   }
 
 // Setting the initial state
-// TODO: Allow setting values at any time
-doInitial(children) {
-  let initialValues = {};
-  // Map the names to the state, to track
-  React.Children.forEach(children, (child) => {
-    if(!child) return;
+  doInitial(children) {
+    let initialValues = {};
+    // Map the names to the state, to track
+    React.Children.forEach(children, (child) => {
+    if(!child || !child.props) return;
     if (child.props.attachOnChange) {
-      if(child.type === Select && child.props.multiple ){
-        initialValues[child.props.name] = [];
-      } else {
-        initialValues[child.props.name] = '';
+        if (child.type === Select && child.props.multiple) {
+          initialValues[child.props.name] = [];
+        } else if (child.props.hasSubComponents) {
+          initialValues[child.props.name] = {};
+        } else {
+          initialValues[child.props.name] = '';
+        }
+      } else if (child.props.attachOnClick) {
+        initialValues[child.props.name] = false;
+      } else if (child.props.children) {
+        initialValues = { ...initialValues, ...this.doInitial(child.props.children) };
       }
-    } else if (child.props.attachOnClick) {
-      initialValues[child.props.name] = false;
-    } else if (child.props.children) {
-      initialValues = { ...initialValues, ...this.doInitial(child.props.children) };
-    }
-  });
-  return initialValues;
-}
+    });
+    return initialValues;
+  }
 
 }
 
 Form.defaultProps = {
   customClassName: '',
-  attachOnChange: true,
   initialValues: {}
 };
-
 
 export default Form;

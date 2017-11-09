@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Text extends Component {
 
@@ -24,6 +25,10 @@ Text.defaultProps = {
   customClassName: '',
   value: '',
   attachOnChange: true
+};
+
+Text.propTypes = {
+  name: PropTypes.string.isRequired
 };
 
 export default Text;

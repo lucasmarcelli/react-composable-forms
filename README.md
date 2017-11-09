@@ -3,33 +3,35 @@ React Composable Forms
 
 ##### This is a composable, reusable form framework for react, built mostly out of boredem and neccesity.
 
-###### This is also very, very alpha :)
+###### This is also very alpha, so make sure you put "latest" in your depedencies :D
 
 Features done and planned:
 ====
 
+- [x] Form to manage state
 - [x] Initial Values / Populate
 - [x] Text
+- [x] Labels
 - [x] Checkbox
+- [x] Select w/ multiple
+- [x] Generic Buttons
+- [x] Reset Button
+- [x] Submit Button
+- [x] Text Area    
+- [x] Form Sections
+- [ ] Custom Components (Soon!)
+- [ ] Validators (Soon!)
+- [ ] PropTypes (Soon!)
+- [ ] Documentation (Ongoing, and it'll get a LOT nicer soon.)
+- [ ] Row Generator (Soon!)
 - [ ] Radio Buttons
 - [ ] Email Field
-- [x] Select w/ multiple
-- [x] Buttons
-- [x] Reset Button
-- [x] Submit Button    
 - [ ] Number Field
-- [x] Text Area
-- [ ] Custom Components
-- [x] Form to manage state
-- [ ] Javascript Validators
-- [ ] Custom Validators
 - [ ] Build Form from Config
 - [ ] Tests
 - [ ] Optional base CSS
-- [ ] PropTypes
-- [ ] Documentation
-- [ ] Add new elements dynamically
-- [x] Labels
+- [ ] Markdown Field
+
 
 ## Quick Start
 

@@ -1,4 +1,4 @@
-import Form, { Button, Checkbox, Select, Text, Textarea } from '../lib';
+import Form, { Button, Checkbox, FormSection, Loud, RowGenerator, Select, Text, Textarea } from '../lib';
 import React, { Component } from 'react';
 
 class App extends Component {
@@ -14,9 +14,15 @@ class App extends Component {
     return (
       <div>
         <Form onSubmit={console.log}
-              initialValues={{ test: 'initial value' }}
+              initialValues={{ test: 'initial value', testsection: { 'testsectiontext1': 'asdf' }}}
+              onChange={console.log}
         >
           <div>
+            {/*Subforms, kinda.*/}
+            <FormSection name="testsection">
+              <Text name="testsectiontext"/>
+              <Text name="testsectiontext1"/>
+            </FormSection>
             {/* You can use whatever structure you want. Don't go too crazy deep though... yet */}
             <Select name="testselect"
                     label={{
@@ -37,6 +43,12 @@ class App extends Component {
                     name="test"
               />
             </div>
+            {/*<RowGenerator>*/}
+              {/*<div>*/}
+                {/*<Text name="weee"/>*/}
+              {/*</div>*/}
+              {/*<Text name="asdf"/>*/}
+            {/*</RowGenerator>*/}
             <Select multiple={true}
                     options={[{
                         value: 'multiple!',
