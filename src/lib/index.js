@@ -10,13 +10,14 @@ import Textarea from './components/Inputs/Textarea';
 
 import asCustomComponent from './components/Helpers/asCustomComponent';
 
+const formSection = asCustomComponent(FormSection, { noWrapper: true, maintainState: false });
 
 export default Form;
 export {
   asCustomComponent,
   Button,
   Checkbox,
-  FormSection,
+  formSection as FormSection,
   Label,
   RowGenerator,
   Select,
