@@ -52,8 +52,6 @@ class FormSection extends Component {
   }
 
   handleChange({ updated, ...rest }) {
-    // Essentially the FormSection just passes props through to the Form for state.
-    // This just makes development a lot easier - everything is grouped nicely, and you can modularize FormSections.
     updated = { ...this.props.values, ...updated };
     updated = { [this.props.name]: updated };
     this.props.onChange({ updated, ...rest })
@@ -61,10 +59,10 @@ class FormSection extends Component {
 }
 
 FormSection.defaultProps = {
-  attachOnChange: true,
-  hasSubComponents: true,
+  attachComponentOnChange: true,
   values: {},
-  customClassName: ''
+  customClassName: '',
+  emptyValue: {}
 };
 
 export default FormSection;

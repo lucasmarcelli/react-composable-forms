@@ -24,7 +24,8 @@ class Text extends Component {
 Text.defaultProps = {
   customClassName: '',
   value: '',
-  attachOnChange: true
+  attachOnChange: true,
+  emptyValue: ''
 };
 
 Text.propTypes = {

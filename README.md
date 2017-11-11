@@ -19,7 +19,7 @@ Features done and planned:
 - [x] Submit Button
 - [x] Text Area    
 - [x] Form Sections
-- [ ] Custom Components (Soon!)
+- [x] Custom Components
 - [ ] Validators (Soon!)
 - [ ] PropTypes (Soon!)
 - [ ] Documentation (Ongoing, and it'll get a LOT nicer soon.)

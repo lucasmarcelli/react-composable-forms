@@ -1,4 +1,4 @@
-import { Button, Checkbox, Label, Select } from '../';
+import { Button, Checkbox, Label } from '../';
 import React, { Component } from 'react';
 
 class Form extends Component {
@@ -9,8 +9,7 @@ class Form extends Component {
     // Set state full of values.
     this.initialValues = { ...this.doInitial(props.children), ...this.props.initialValues, ...this.props.values };
     this.state = {
-      values: this.initialValues,
-      name: this.props.name ? this.props.name : undefined
+      values: this.initialValues
     };
 
     // Bind Functions
@@ -20,6 +19,7 @@ class Form extends Component {
     this.doInitial = this.doInitial.bind(this);
     this.attachHandlers = this.attachHandlers.bind(this);
     this.populate = this.populate.bind(this);
+    this.setFullStructure = this.setFullStructure.bind(this);
   }
 
   render() {
@@ -34,8 +34,13 @@ class Form extends Component {
   }
 
   // A ref for the Form to populate, if they are waiting for network, or something changes dynamically.
+  // Sets the initialValues to whatever this was, regardless when it happened.
   populate(data) {
-    const updated = { ...this.state.values, ...data };
+    for(let key of Object.keys(data)){
+      data[key] = { ...this.initialValues[key], ...data[key] }
+    }
+    const updated = { ...this.state.values, ...this.initialValues, ...data };
+    this.initialValues = updated;
     this.setState({ values: updated });
   }
 
@@ -68,6 +73,14 @@ class Form extends Component {
     });
   }
 
+  // Sets the full structure of the custom component
+  setFullStructure(update) {
+    let { values } = this.state;
+    values = { ...values, ...update };
+    this.initialValues = values;
+    this.setState({ values: values });
+  }
+
   // Render the children with onChange props attached.
   attachHandlers(children) {
     return React.Children.map(children, (child) => {
@@ -75,14 +88,15 @@ class Form extends Component {
       if(!child.props) return child;
       // Check for type
       if(child.type === Button) return child;
-      let handlerType = child.props.attachOnChange ? 'onChange' : 'onClick';
-      let valueType = child.type === Checkbox ? 'checked' : 'value';
-      if (child.props.attachOnChange || child.props.attachOnClick) {
-        let props = { [handlerType]: this.handleChange };
-        if(child.props.hasSubComponents) {
-            props.values = this.state.values[child.props.name];
-        } else {
-            props[valueType] = this.state.values[child.props.name];
+      let handlerType = (child.props.attachOnChange || child.props.attachComponentOnChange) ? 'onChange' : 'onClick';
+      let valueType = child.type === Checkbox ? 'checked' : (child.props.attachComponentOnChange ? 'values' : 'value');
+      if (child.props.attachOnChange || child.props.attachOnClick || child.props.attachComponentOnChange) {
+        let props = {
+          [handlerType]: this.handleChange,
+          [valueType]: this.state.values[child.props.name]
+        };
+        if(child.props.attachComponentOnChange) {
+          props.setFullStructure = this.setFullStructure;
         }
         const element = React.cloneElement(child, props);
         if(child.props.label) {
@@ -109,24 +123,19 @@ class Form extends Component {
     let initialValues = {};
     // Map the names to the state, to track
     React.Children.forEach(children, (child) => {
-    if(!child || !child.props) return;
-    if (child.props.attachOnChange) {
-        if (child.type === Select && child.props.multiple) {
-          initialValues[child.props.name] = [];
-        } else if (child.props.hasSubComponents) {
-          initialValues[child.props.name] = {};
-        } else {
-          initialValues[child.props.name] = '';
-        }
+      if(!child || !child.props) return;
+      if (child.props.attachOnChange) {
+        initialValues[child.props.name] = (child.props.multiple ? [] : child.props.emptyValue);
       } else if (child.props.attachOnClick) {
         initialValues[child.props.name] = false;
+      } else if (child.props.attachComponentOnChange) {
+        initialValues[child.props.name] = child.props.emptyValue;
       } else if (child.props.children) {
         initialValues = { ...initialValues, ...this.doInitial(child.props.children) };
       }
     });
     return initialValues;
   }
-
 }
 
 Form.defaultProps = {

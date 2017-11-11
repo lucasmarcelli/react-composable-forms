@@ -25,7 +25,8 @@ class Textarea extends Component {
 Textarea.defaultProps = {
   customClassName: '',
   value: '',
-  attachOnChange: true
+  attachOnChange: true,
+  emptyValue: ''
 };
 
 export default Textarea;

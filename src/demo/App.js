@@ -1,5 +1,8 @@
-import Form, { Button, Checkbox, FormSection, Loud, RowGenerator, Select, Text, Textarea } from '../lib';
+import Form, { Button, Checkbox, FormSection, Select, Text, Textarea, asCustomComponent } from '../lib';
 import React, { Component } from 'react';
+import SomeComponent from './SomeComponent';
+
+const SomeCustomComponent = asCustomComponent(SomeComponent);
 
 class App extends Component {
 
@@ -10,14 +13,23 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    this.populate({ custom: { val1: 'populated' }})
+  }
+
   render() {
     return (
       <div>
         <Form onSubmit={console.log}
-              initialValues={{ test: 'initial value', testsection: { 'testsectiontext1': 'asdf' }}}
-              onChange={console.log}
+              initialValues={{
+                test: 'initial value',
+                testsection: { 'testsectiontext1': 'asdf' }
+              }}
+              ref={({ populate }) => this.populate = populate}
         >
           <div>
+            <SomeCustomComponent name="custom"
+                                 emptyValue={{}}/>
             {/*Subforms, kinda.*/}
             <FormSection name="testsection">
               <Text name="testsectiontext"/>

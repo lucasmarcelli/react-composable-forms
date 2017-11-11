@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from './components/Inputs/Button';
 import Checkbox from './components/Inputs/Checkbox';
 import Form from './components/Form';
@@ -9,8 +8,12 @@ import Select from './components/Inputs/Select';
 import Text from './components/Inputs/Text';
 import Textarea from './components/Inputs/Textarea';
 
+import asCustomComponent from './components/Helpers/asCustomComponent';
+
+
 export default Form;
 export {
+  asCustomComponent,
   Button,
   Checkbox,
   FormSection,

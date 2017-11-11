@@ -65,7 +65,8 @@ class Select extends Component {
 Select.defaultProps = {
   customClassName: '',
   attachOnChange: true,
-  defaultText: 'Select an Option'
+  defaultText: 'Select an Option',
+  emptyValue: ''
 };
 
 
