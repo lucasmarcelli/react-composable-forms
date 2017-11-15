@@ -199,3 +199,5 @@ See Demo.
 
 Docs are incomplete still sorry <3
 
+Thanks to:
+UdiliaInc for the [create-react-library](https://github.com/UdiliaInc/create-react-library) starter kit - Made it really easy to set this up as a library.
