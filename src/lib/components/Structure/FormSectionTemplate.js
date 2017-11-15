@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class FormSection extends Component {
+class FormSectionTemplate extends Component {
 
   render() {
     return (
@@ -12,11 +12,9 @@ class FormSection extends Component {
 
 }
 
-FormSection.defaultProps = {
-  attachComponentOnChange: true,
-  values: {},
+FormSectionTemplate.defaultProps = {
   customClassName: '',
   emptyValue: {}
 };
 
-export default FormSection;
+export default FormSectionTemplate;

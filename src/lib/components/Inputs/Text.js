@@ -23,7 +23,6 @@ class Text extends Component {
 
 Text.defaultProps = {
   customClassName: '',
-  value: '',
   attachOnChange: true,
   emptyValue: ''
 };

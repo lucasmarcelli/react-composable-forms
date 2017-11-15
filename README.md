@@ -11,7 +11,7 @@ Features done and planned:
 - [x] Form to manage state
 - [x] Initial Values / Populate
 - [x] Text
-- [x] Labels
+- [x] Labels 
 - [x] Checkbox
 - [x] Select w/ multiple
 - [x] Generic Buttons
@@ -19,17 +19,16 @@ Features done and planned:
 - [x] Submit Button
 - [x] Text Area    
 - [x] Form Sections
-- [x] Custom Components
+- [x] Custom Components (Kind of! It'll get much better soon!)
 - [ ] Validators (Soon!)
 - [ ] PropTypes (Soon!)
 - [ ] Documentation (Ongoing, and it'll get a LOT nicer soon.)
-- [ ] Row Generator (Soon!)
-- [ ] Radio Buttons
-- [ ] Email Field
-- [ ] Number Field
+- [ ] Multi Generator (Soon!)
+- [ ] Optional Structure
+- [ ] Theme support
+- [ ] All HTML fields implemented
 - [ ] Build Form from Config
 - [ ] Tests
-- [ ] Optional base CSS
 - [ ] Markdown Field
 
 

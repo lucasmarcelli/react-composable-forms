@@ -24,8 +24,9 @@ class Checkbox extends Component {
 
 Checkbox.defaultProps = {
   customClassName: '',
-  checked: false,
-  attachOnClick: true
+  emptyValue: false,
+  attachOnClick: true,
+  valueKey: 'checked'
 };
 
 export default Checkbox;

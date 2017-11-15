@@ -1,25 +1,21 @@
 import Button from './components/Inputs/Button';
 import Checkbox from './components/Inputs/Checkbox';
 import Form from './components/Form';
-import FormSection from './components/Helpers/FormSection';
+import FormSectionTemplate from './components/Structure/FormSectionTemplate';
 import Label from './components/Structure/Label';
-import RowGenerator from './components/Helpers/RowGenerator';
 import Select from './components/Inputs/Select';
 import Text from './components/Inputs/Text';
 import Textarea from './components/Inputs/Textarea';
+import asInternalComponent from './components/Helpers/asInternalComponent';
 
-import asCustomComponent from './components/Helpers/asCustomComponent';
-
-const formSection = asCustomComponent(FormSection, { noWrapper: true, maintainState: false });
+const FormSection = asInternalComponent(FormSectionTemplate, { customName: 'FormSection' });
 
 export default Form;
 export {
-  asCustomComponent,
   Button,
   Checkbox,
-  formSection as FormSection,
+  FormSection,
   Label,
-  RowGenerator,
   Select,
   Text,
   Textarea

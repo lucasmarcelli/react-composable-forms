@@ -16,7 +16,8 @@ class Button extends Component {
 
 Button.defaultProps = {
   customClassName: '',
-  submit: false
+  submit: false,
+  reset: false
 };
 
 
