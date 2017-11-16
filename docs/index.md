@@ -3,12 +3,12 @@
 The intention of `react-composable-forms` is to provide a modular, composable, and customizable form component for React.
 Forms are created using a `<Form>` component, and many provided sub components, or, you can use the components on their own.
 
-Install:
+##### Install:
 `yarn add react-composable-forms` or `npm install react-composable-forms --save`
 
 Since this is pre 1.0.0, don't forget to put "latest" in your dependencies if you are planning to keep using this, or you wont get new features as they are added.
 
-Quick Start (Docs are below):
+##### Quick Start:
 
 ``` jsx
 import Form, { Text, Button } from 'react-composable-forms';
@@ -34,13 +34,10 @@ You can also use the components outside of a `<Form>`, but you have to provide a
 
 Each input event would fire the state change, or whatever function is passed.
 
-
-# Documentation
-
 ## Components
 
-### [`Form`](components/form.md) 
-### `FormSection`
-### `Text`
+#### [`Form`](components/form.md) 
+#### `FormSection`
+#### `Text`
 
 
