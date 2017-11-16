@@ -10,7 +10,7 @@ Since this is pre 1.0.0, don't forget to put "latest" in your dependencies if yo
 
 Quick Start (Docs are below):
 
-``` ecmascript 6
+``` jsx
 import Form, { Text, Button } from 'react-composable-forms';
 
 // In render
@@ -25,7 +25,7 @@ Clicking the button would print `{text-box-1: ''}` to the console, or whatever t
 
 You can also use the components outside of a `<Form>`, but you have to provide a function as props for `onChange` and pass the value as props to `value`:
 
-``` ecmascript 6
+``` jsx
 <Text name="text"
       value={this.state.textvalue}
       onChange={({ updated }) => this.setState(updated)/>
