@@ -32,12 +32,12 @@ You can also use the components outside of a `<Form>`, but you have to provide a
       
 ```
 
-Each input event would fire the state change, or whatever function is passed.
+Each input event would fire the state change, or whatever function is passed, so you are responsible for controlling the component like it's just an `<input/>` html field.
 
 ## Components
 
-#### [`Form`](components/form.md) 
-#### `FormSection`
-#### `Text`
+#### [`<Form/>`](components/form.md) 
+#### `<FormSection/>`
+#### `<Text/>`
 
 
