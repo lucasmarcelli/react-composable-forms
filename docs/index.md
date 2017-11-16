@@ -27,7 +27,7 @@ You can also use the components outside of a `<Form>`, but you have to provide a
 
 ``` jsx
 <Text name="text"
-      value={this.state.textvalue}
+      value={this.state.text}
       onChange={({ updated }) => this.setState(updated)/>
       
 ```
