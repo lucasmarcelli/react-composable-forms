@@ -1,17 +1,20 @@
 import { Label } from '../../index';
 import React from 'react';
 
+import { buildInitial } from './formFunctions';
+
 const getDisplayName = (WrappedComponent) => {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 };
 
-const asInternalComponent = (Custom, { setToState = false, maintainState = false, customName = false } = {}) => {
+const asInternalComponent = (Custom, { maintainState = false, customName = false } = {}) => {
   const CustomComponent = class extends Custom {
 
     constructor(props) {
       let { state } = super(props);
-
-      this.initialValues = { ...this.buildInitial(props.children), ...this.props.initialValues };
+      let { values } = this.buildInitial(props.children);
+      values = (Array.isArray(values)) ? [...values, ...[{ ...values[0], ...props.values[0] }]] : { ...values, ...props.values };
+      this.initialValues = values;
       if(maintainState) {
         this.state = {
           ...state,
@@ -20,13 +23,15 @@ const asInternalComponent = (Custom, { setToState = false, maintainState = false
       }
 
       this.props.setInitial && this.props.setInitial(this.initialValues, this.props.name);
+      // this.props.setSubmitAs && this.props.setSubmitAs(this.submitAs, this.props.name);
 
       this.attachInputHandlers = this.attachInputHandlers.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.setOnChange = this.setOnChange.bind(this);
-      this.setOnChangeToState = this.setOnChangeToState.bind(this);
       this.setOnClick = this.setOnClick.bind(this);
-      this.setOnClickToState = this.setOnClickToState.bind(this);
+      this.setOnComponentChange = this.setOnComponentChange.bind(this);
+      this.setSubmitAs = this.setSubmitAs.bind(this);
+      this.setInitial = this.setInitial.bind(this);
     }
 
     render() {
@@ -36,33 +41,35 @@ const asInternalComponent = (Custom, { setToState = false, maintainState = false
       return React.cloneElement(elementTree, {}, children);
     }
 
+    setInitial(values, name) {
+      if(super.setInitial) {
+        super.setInitial(values, name);
+      } else {
+        this.initialValues[name] = values instanceof Array ? [...values, ...this.initialValues[name]] : { ...values, ...this.initialValues[name] };
+        this.props.setInitial && this.props.setInitial(this.initialValues, this.props.name);
+      }
+    }
+
     buildInitial(children) {
       if(super.buildInitial) {
         return super.buildInitial(children);
       } else {
-        let values = {};
-        React.Children.forEach(children, (child) => {
-          if(!child) return;
-          if(child.props.attachOnChange) {
-            values[child.props.name] = (child.props.multiple ? [] : child.props.emptyValue);
-          } else if(child.props.attachOnClick) {
-            values[child.props.name] = false;
-          } else if (child.props.children) {
-            values = { ...values, ...this.buildInitial(child.props.children) };
-          }
-        });
-        return values;
+        return buildInitial(children);
       }
     }
 
     handleChange({ updated, ...rest }) {
-      if(super.handleChange) {
-        super.handleChange({ ...updated, ...rest })
+      if(super.handleChange){
+        super.handleChange({ updated, ...rest });
       } else {
         updated = { ...this.props.values, ...updated };
         updated = { [this.props.name]: updated };
-        this.props.onChange({ updated, ...rest })
+        this.props.onChange({ updated, ...rest });
       }
+    }
+
+    setSubmitAs(submitAs, name) {
+      // console.log(submitAs, name);
     }
 
     attachInputHandlers(children) {
@@ -71,9 +78,11 @@ const asInternalComponent = (Custom, { setToState = false, maintainState = false
         else {
           if(!child.props) return child;
           else if(child.props.attachOnChange){
-            child = (setToState ? this.setOnChangeToState(child) : this.setOnChange(child));
+            child = this.setOnChange(child);
           } else if(child.props.attachOnClick) {
-            child = (setToState ? this.setOnClickToState(child) : this.setOnClick(child));
+            child = this.setOnClick(child);
+          } else if (child.props.attachOnComponentChange) {
+              return this.setOnComponentChange(child);
           } else if (child.props.children) {
             child = React.cloneElement(child, child.props, this.attachInputHandlers(child.props.children));
           }
@@ -94,6 +103,23 @@ const asInternalComponent = (Custom, { setToState = false, maintainState = false
       });
     }
 
+    setOnComponentChange(child) {
+      if(super.setOnComponentChange){
+        return super.setOnComponentChange(child);
+      } else {
+        if(!this.props || !this.props.values || this.props.values[child.props.name] === undefined ) {
+          return new Error('The props of the form does not match the rendered child ' + child.props.name);
+        }
+        let value = child.props.valueKey || 'values';
+        const props = {
+          onChange: this.handleChange,
+          [value]: this.props.values[child.props.name],
+          setInitial: this.setInitial
+        };
+        return (React.cloneElement(child, props));
+      }
+    }
+
     setOnChange(child) {
       if(!this.props || !this.props.values || this.props.values[child.props.name] === undefined) {
         return null;
@@ -102,30 +128,6 @@ const asInternalComponent = (Custom, { setToState = false, maintainState = false
       const props = {
         onChange: this.handleChange,
         [value]: this.props.values[child.props.name]
-      };
-      return (React.cloneElement(child, props));
-    }
-
-    setOnChangeToState(child) {
-      if(!this.state || !this.state.values || this.state.values[child.props.name] === undefined ) {
-        return null;
-      }
-      let value = child.props.valueKey || 'value';
-      const props = {
-        onChange: this.handleChange,
-        [value]: this.state.values[child.props.name]
-      };
-      return (React.cloneElement(child, props));
-    }
-
-    setOnClickToState(child) {
-      if(!this.state || !this.state.values || this.state.values[child.props.name] === undefined ) {
-        return null;
-      }
-      let value = child.props.valueKey || 'value';
-      const props = {
-        onClick: this.handleChange,
-        [value]: this.state.values[child.props.name]
       };
       return (React.cloneElement(child, props));
     }
@@ -145,6 +147,7 @@ const asInternalComponent = (Custom, { setToState = false, maintainState = false
 
   CustomComponent.defaultProps = {
     attachOnComponentChange: true,
+    initialValues: {},
     ...Custom.defaultProps
   };
 

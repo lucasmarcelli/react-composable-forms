@@ -6,9 +6,11 @@ class Form extends Component {
     constructor(props){
         super(props);
 
-        this.initialValues = { ...this.buildInitial(props.children), ...this.props.initialValues };
+        let { values } = this.buildInitial(props.children);
+        let initialValues = { ...values, ...this.props.initialValues };
         this.state = {
-          values: this.initialValues
+          initialValues: initialValues,
+          values: initialValues
         };
 
         this.populate = this.populate.bind(this);
@@ -21,6 +23,7 @@ class Form extends Component {
         this.buildInitial = this.buildInitial.bind(this);
         this.setOnComponentChange = this.setOnComponentChange.bind(this);
         this.setInitial = this.setInitial.bind(this);
+        this.setSubmitAs = this.setSubmitAs.bind(this);
     }
     
     render(){
@@ -38,33 +41,41 @@ class Form extends Component {
     // Sets the initialValues to whatever this was, regardless when it happened.
     populate(data) {
       for(let key of Object.keys(data)){
-        data[key] = { ...this.initialValues[key], ...data[key] }
+        data[key] = { ...this.state.initialValues[key], ...data[key] }
       }
-      const updated = { ...this.state.values, ...this.initialValues, ...data };
-      this.initialValues = updated;
-      this.setState({ values: updated });
+      const updated = { ...this.state.values, ...this.state.initialValues, ...data };
+      this.setState({ values: updated, initialValues: updated });
     }
 
     buildInitial(children) {
       let values = {};
+      // let submitAs = {};
       React.Children.forEach(children, (child) => {
         if(!child) return;
         if(child.props.attachOnChange) {
           values[child.props.name] = (child.props.multiple ? [] : child.props.emptyValue);
+          // child.props.submitType && (submitAs[child.props.name] = child.props.submitType);
         } else if(child.props.attachOnClick) {
           values[child.props.name] = false;
+          // child.props.submitType && (submitAs[child.props.name] = child.props.submitType);
         } else if (child.props.attachOnComponentChange) {
-          values[child.props.name] = child.props.emptyValue;
+          values[child.props.name] = child.props.emptyValue || {};
+          // child.props.submitType && (submitAs[child.props.name] = { submitAs: child.props.submitType })
         } else if (child.props.children) {
-          values = { ...values, ...this.buildInitial(child.props.children) };
+          let initial = this.buildInitial(child.props.children);
+          // let childSubmitAs = initial.submitAs;
+          let childValues = initial.values;
+          values = { ...values, ...childValues };
+          // submitAs = { ...submitAs, ...childSubmitAs };
         }
       });
-      return values;
+      return { values };
     }
 
     setInitial(values, name) {
-      this.initialValues[name] = { ...values, ...this.initialValues[name] };
-      this.setState({ values: this.initialValues });
+      let { initialValues } = this.state;
+      initialValues[name] = values;
+      this.setState({ values: initialValues, initialValues: initialValues });
     }
 
     attachInputHandlers(children) {
@@ -77,7 +88,7 @@ class Form extends Component {
           } else if (child.props.attachOnClick) {
             child = this.setOnClick(child);
           } else if (child.props.attachOnComponentChange) {
-            return this.setOnComponentChange(child);
+            child = this.setOnComponentChange(child);
           } else if (child.props.children) {
             child = React.cloneElement(child, child.props, this.attachInputHandlers(child.props.children));
           }
@@ -96,6 +107,10 @@ class Form extends Component {
           }
         }
       });
+    }
+
+    setSubmitAs(submitAs, name) {
+      // console.log(submitAs, name);
     }
 
     setOnComponentChange(child) {
@@ -142,7 +157,7 @@ class Form extends Component {
 
     handleReset(event) {
       event.preventDefault();
-      this.setState({ values: this.initialValues }, () => {
+      this.setState({ values: this.state.initialValues }, () => {
         let toreturn = this.props.name ? { [this.props.name]: this.state.values } : this.state.values;
         this.props.onReset && this.props.onReset(toreturn);
       });

@@ -19,12 +19,12 @@ Features done and planned:
 - [x] Submit Button
 - [x] Text Area    
 - [x] Form Sections
+- [x] Duplicate Generator
 - [x] Custom Components (Kind of! It'll get much better soon!)
 - [ ] Validators (Soon!)
 - [ ] PropTypes (Soon!)
 - [ ] Documentation (Ongoing, and it'll get a LOT nicer soon.)
-- [ ] Multi Generator (Soon!)
-- [ ] Optional Structure
+- [ ] Optional Structure (Soon!)
 - [ ] Theme support
 - [ ] All HTML fields implemented
 - [ ] Build Form from Config

@@ -1,4 +1,4 @@
-import Form, { Button, Checkbox, FormSection, Text } from '../lib';
+import Form, { Button, Checkbox, Duplicator, FormSection, Text } from '../lib';
 import React, { Component } from 'react';
 class App extends Component {
 
@@ -10,8 +10,13 @@ class App extends Component {
     return (
       <div>
         <Form onSubmit={console.log}
-              initialValues={ { 'section-test': { 'text-section-test': 'initial value' }}}
+              initialValues={{ 'duplicator-test': [{ 'duplicator-text': 'aa' }, { 'duplicator-text-1':'bb' }], 'section-test': { 'text-section-test': 'aaa' }}}
+
         >
+          <Duplicator name="duplicator-test">
+            <Text name="duplicator-text"/>
+            <Text name="duplicator-text-1"/>
+          </Duplicator>
           <FormSection name="section-test">
             <Text name="text-section-test"
                   label={{ text: 'label-test' }}
