@@ -1,4 +1,4 @@
-import Form, { Button, Checkbox, Duplicator, FormSection, Text } from '../lib';
+import Form, { Button, Checkbox, Duplicator, FormSection, Text, Select } from '../lib';
 import React, { Component } from 'react';
 class App extends Component {
 
@@ -13,7 +13,13 @@ class App extends Component {
               initialValues={{ 'duplicator-test': [{ 'duplicator-text': 'aa' }, { 'duplicator-text-1':'bb' }], 'section-test': { 'text-section-test': 'aaa' }}}
 
         >
-          <Duplicator name="duplicator-test">
+          <Select name="test"
+                  options={[{
+                    value: 0,
+                    text: 'asd'
+                  }]}
+                  />
+          <Duplicator name="duplicator-test" pressToAdd={true}>
             <Text name="duplicator-text"/>
             <Text name="duplicator-text-1"/>
           </Duplicator>
@@ -24,15 +30,15 @@ class App extends Component {
             <Text name="text-section-test-1"/>
             <Checkbox name="checkbox-section-test"/>
           </FormSection>
-          <div>
-            <Text name="text-test"
-                  label={{ text: 'label-test' }}
-            />
-          </div>
+          <Text name="text-test"
+                  label={{ text: 'label-test' }}/>
           <Checkbox name="checkbox-test"/>
           <Button submit={true}/>
           <Button reset={true}/>
         </Form>
+        <FormSection name="asd" noForm values={{}} onChange={()=>{}}>
+          <Text name="asd"/>
+        </FormSection>
       </div>
     );
   }
