@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Label extends Component {
 
@@ -17,6 +18,12 @@ Label.defaultProps = {
   labelClass: '',
   textClass: '',
   text: ''
+};
+
+Label.propTypes = {
+  labelClass: PropTypes.string,
+  textClass: PropTypes.string,
+  text: PropTypes.string.isRequired
 };
 
 

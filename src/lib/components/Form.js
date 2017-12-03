@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Label } from '../index';
+import PropTypes from 'prop-types';
 
 class Form extends Component {
     
@@ -180,6 +181,17 @@ class Form extends Component {
 Form.defaultProps = {
   customClassName: '',
   initialValues: {}
+};
+
+Form.propTypes = {
+  children: PropTypes.node.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+
+  name: PropTypes.string,
+  customClassName: PropTypes.string,
+  onChange: PropTypes.func,
+  onReset: PropTypes.func,
+  initialValues: PropTypes.object
 };
 
 export default Form;

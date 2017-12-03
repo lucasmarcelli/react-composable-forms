@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { validateOutOfForm } from '../Helpers/formUtils';
 
 class Button extends Component {
 
@@ -18,6 +20,15 @@ Button.defaultProps = {
   customClassName: '',
   submit: false,
   reset: false
+};
+
+Button.propTypes = {
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  submit: PropTypes.bool,
+  reset: PropTypes.bool,
+  customClassName: PropTypes.string,
+  attachOnClick: PropTypes.bool
 };
 
 

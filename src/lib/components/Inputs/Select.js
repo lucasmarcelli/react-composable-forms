@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { validateOutOfForm } from '../Helpers/formUtils';
+
 
 class Select extends Component {
 
@@ -66,7 +69,32 @@ Select.defaultProps = {
   customClassName: '',
   attachOnChange: true,
   defaultText: 'Select an Option',
-  emptyValue: ''
+  emptyValue: '',
+  defaultVal: ''
+};
+
+Select.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: (props, propname, component) => validateOutOfForm(props, propname, component, 'String'),
+  onChange: (props, propname, component) => validateOutOfForm(props, propname, component, 'Function'),
+  emptyValue: PropTypes.string.isRequired,
+  defaultVal: (props, propname, component) => {
+      if(!props.noDefault && !props.defualtVal && props.defaultVal !== '')
+        return new Error('You must supply defaultVal unless noDefault is passed in ' + component);
+  },
+  defaultText: (props, propname, component) => {
+    if(!props.noDefault && (!props.defaultText || props.defaultText.constructor.name !== 'String'))
+      return new Error('You must supply defaultText as a string unless noDefault is passed in ' + component);
+  },
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    text: PropTypes.string.isRequired
+  })).isRequired,
+
+  customClassName: PropTypes.string,
+  multiple: PropTypes.bool,
+  noDefault: PropTypes.bool,
+  attachOnChange: PropTypes.bool
 };
 
 

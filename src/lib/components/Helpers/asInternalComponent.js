@@ -1,7 +1,8 @@
 import { Label } from '../../index';
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { buildInitial } from './formFunctions';
+import { buildInitial, validateOutOfForm } from './formUtils';
 
 const getDisplayName = (WrappedComponent) => {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -107,7 +108,7 @@ const asInternalComponent = (Custom, { maintainState = false, customName = false
       if(super.setOnComponentChange){
         return super.setOnComponentChange(child);
       } else {
-        if(!this.props || !this.props.values || this.props.values[child.props.name] === undefined ) {
+        if((!child.props.children && this.props.values[child.props.name] === undefined) || !this.props || !this.props.values ) {
           return new Error('The props of the form does not match the rendered child ' + child.props.name);
         }
         let value = child.props.valueKey || 'values';
@@ -147,11 +148,26 @@ const asInternalComponent = (Custom, { maintainState = false, customName = false
 
   CustomComponent.defaultProps = {
     attachOnComponentChange: true,
-    initialValues: {},
+    emptyValue: {},
+    customClassName: '',
     ...Custom.defaultProps
   };
 
   CustomComponent.displayName = customName || getDisplayName(Custom);
+
+  CustomComponent.propTypes = {
+    name: PropTypes.string.isRequired,
+    attachOnComponentChange: PropTypes.bool.isRequired,
+    emptyValue: PropTypes.object.isRequired,
+
+    values: (props, propname, component) => validateOutOfForm(props, propname, component, null, props.emptyValue.constructor.name),
+    onChange: (props, propname, component) => validateOutOfForm(props, propname, component, 'Function'),
+
+    setInitial: PropTypes.func,
+    customClassName: PropTypes.string,
+    noForm: PropTypes.bool,
+    ...Custom.PropTypes
+  };
 
   return CustomComponent;
 };

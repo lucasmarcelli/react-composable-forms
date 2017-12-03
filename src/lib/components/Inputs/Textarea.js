@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { validateOutOfForm } from '../Helpers/formUtils';
+
 
 class Textarea extends Component {
 
@@ -26,6 +29,17 @@ Textarea.defaultProps = {
   customClassName: '',
   attachOnChange: true,
   emptyValue: ''
+};
+
+Textarea.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: (props, propname, component) => validateOutOfForm(props, propname, component, 'String'),
+  onChange: (props, propname, component) => validateOutOfForm(props, propname, component, 'Function'),
+  emptyValue: PropTypes.string.isRequired,
+
+  placeholder: PropTypes.string,
+  customClassName: PropTypes.string,
+  attachOnChange: PropTypes.bool
 };
 
 export default Textarea;

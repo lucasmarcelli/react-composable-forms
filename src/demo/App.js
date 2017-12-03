@@ -29,6 +29,9 @@ class App extends Component {
             />
             <Text name="text-section-test-1"/>
             <Checkbox name="checkbox-section-test"/>
+            <FormSection name="section-section">
+              <Text name="asd"/>
+            </FormSection>
           </FormSection>
           <Text name="text-test"
                   label={{ text: 'label-test' }}/>

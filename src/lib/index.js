@@ -8,7 +8,6 @@ import Select from './components/Inputs/Select';
 import Text from './components/Inputs/Text';
 import Textarea from './components/Inputs/Textarea';
 import asInternalComponent from './components/Helpers/asInternalComponent';
-import { buildInitial } from './components/Helpers/formFunctions';
 
 const FormSection = asInternalComponent(FormSectionTemplate);
 
@@ -21,7 +20,6 @@ export {
   Label,
   Select,
   Text,
-  Textarea,
-  buildInitial
+  Textarea
 };
 

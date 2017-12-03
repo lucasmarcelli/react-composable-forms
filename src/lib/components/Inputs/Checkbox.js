@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { validateOutOfForm } from '../Helpers/formUtils';
 
 class Checkbox extends Component {
 
@@ -27,6 +29,21 @@ Checkbox.defaultProps = {
   emptyValue: false,
   attachOnClick: true,
   valueKey: 'checked'
+};
+
+Checkbox.propTypes = {
+  name: PropTypes.string.isRequired,
+  onClick: (props, propname, component) => validateOutOfForm(props, propname, component, 'Function'),
+  emptyValue: PropTypes.bool.isRequired,
+
+  checked: (props, propname, component) => {
+    if(props.checked === undefined && props.noForm){
+      console.log(props.checked)
+      return new Error(component + ' requires the prop ' + propname + ' if not handled by a form component. Validation Failed.')
+    }
+  },
+  attachOnClick: PropTypes.bool,
+  customClassName: PropTypes.string
 };
 
 export default Checkbox;

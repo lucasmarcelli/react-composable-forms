@@ -12,9 +12,4 @@ class FormSection extends Component {
 
 }
 
-FormSection.defaultProps = {
-  customClassName: '',
-  emptyValue: {}
-};
-
 export default FormSection;
