@@ -1,0 +1,44 @@
+@import "Vars";
+
+.styled * {
+  font: 400 $font-size system-ui;
+}
+
+.styled.composable-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.styled {
+
+  .form-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .form-section.form-row {
+    flex-wrap: wrap;
+    .form-row {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .form-duplicator.form-row {
+    flex-wrap: wrap;
+    .form-section.form-row {
+      flex-wrap: wrap;
+    }
+  }
+
+  @import "Structure/Label";
+  @import "Inputs/Sass/Button";
+  @import "Inputs/Sass/Text";
+  @import "Inputs/Sass/Select";
+  @import "Inputs/Sass/Textarea";
+  @import "Inputs/Sass/Checkbox";
+}
+

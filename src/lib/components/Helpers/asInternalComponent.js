@@ -33,6 +33,7 @@ const asInternalComponent = (Custom, { maintainState = false, customName = false
       this.setOnComponentChange = this.setOnComponentChange.bind(this);
       this.setSubmitAs = this.setSubmitAs.bind(this);
       this.setInitial = this.setInitial.bind(this);
+      this.buildWithStructure = this.buildWithStructure.bind(this);
     }
 
     render() {
@@ -73,8 +74,32 @@ const asInternalComponent = (Custom, { maintainState = false, customName = false
       // console.log(submitAs, name);
     }
 
+    buildWithStructure(children) {
+      let torender = [];
+      children = React.Children.toArray(children);
+      let counter = 0;
+      for(let thing of this.props.structure) {
+        let row = [];
+        if(Number.isInteger(thing)){
+          for(let i = 0; i < thing; i++) {
+            let child = children.shift();
+            if(child){
+              row.push(React.cloneElement(child, { size: thing, ...child.props }));
+            }
+          }
+          torender.push(<div className="form-row" key={'structure-' + counter}>{row}</div>);
+        } else {
+          let child = children.shift();
+          child = React.cloneElement(child, { structure: thing, ...child.props });
+          torender.push(child);
+        }
+        counter++;
+      }
+      return torender;
+    }
+
     attachInputHandlers(children) {
-      return React.Children.map(children, (child) => {
+      let torender = React.Children.map(children, (child) => {
         if(!child) return;
         else {
           if(!child.props) return child;
@@ -102,6 +127,12 @@ const asInternalComponent = (Custom, { maintainState = false, customName = false
           return child;
         }
       });
+
+      if(this.props.structure) {
+        return this.buildWithStructure(torender);
+      } else {
+        return torender;
+      }
     }
 
     setOnComponentChange(child) {

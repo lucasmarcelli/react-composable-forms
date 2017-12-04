@@ -14,7 +14,7 @@ const buildInitial = (children) => {
       values[child.props.name] = child.props.emptyValue;
       // child.props.submitType && (submitAs[child.props.name] = { submitAs: child.props.submitType })
     } else if (child.props.children) {
-      let initial = this.buildInitial(child.props.children);
+      let initial = buildInitial(child.props.children);
       // let childSubmitAs = initial.submitAs;
       let childValues = initial.values;
       values = { ...values, ...childValues };

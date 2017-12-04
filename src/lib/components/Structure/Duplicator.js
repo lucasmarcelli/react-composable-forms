@@ -35,7 +35,7 @@ class Duplicator extends Component {
     render(){
         let add = (this.props.pressToAdd && this.state.rows === this.props.values.length) ? <Button text={this.props.addText} onClick={(event) => {this.setState({ rows: ++this.state.rows })}}/> : null;
         return(
-            <div className={'form-duplicator ' + this.props.customClassName}>
+            <div className={'form-duplicator ' + (this.props.structure || this.props.structure === null ? 'form-row ' : '') + this.props.customClassName}>
                 {this.renderRows(this.props.values)}
                 {add}
             </div>
@@ -61,12 +61,20 @@ class Duplicator extends Component {
       let counter = 0;
       let emptyRow = this.props.pressToAdd ? [...this.fields, (<Button key="delete" name={values.length} text={this.props.removeText} onClick={this.remove}/>)] : [...this.fields];
       for(counter; counter < values.length; counter++) {
+        let struct = null;
+        if(Array.isArray(this.props.structure)){
+          struct = [...this.props.structure];
+          struct[struct.length - 1]++;
+        }else if(Number.isInteger(this.props.structure)){
+          struct++;
+        }
         let fields = this.props.singleRemove ? [...this.fields] : [...this.fields,  (<Button key="delete" name={counter} text={this.props.removeText} onClick={this.remove}/>)];
         items.push(React.createElement(DuplicatorRow, {
           name: counter,
           key: 'duplicator-row-' + counter,
           values: values[counter],
-          onChange: this.handleChange
+          onChange: this.handleChange,
+          structure: struct
         }, fields))
       }
       if(!this.props.pressToAdd || (this.props.pressToAdd && values.length === this.state.rows - 1)) {
@@ -74,7 +82,8 @@ class Duplicator extends Component {
           name: values.length,
           key: 'duplicator-row-' + values.length,
           values: this.emptyRow,
-          onChange: this.handleChange
+          onChange: this.handleChange,
+          structure: this.props.structure
         }, emptyRow));
       }
       return items;
@@ -85,7 +94,6 @@ class Duplicator extends Component {
       if(this.props.pressToAdd) {
         this.setState({ rows: --this.state.rows });
       }
-      console.log(event.target.name)
       let values = [];
       // Splice somehow fucks this up hardcore idk.
       for(let i = 0; i < this.props.values.length; i++) {

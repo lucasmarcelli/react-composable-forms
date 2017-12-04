@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Label } from '../index';
+import { Label, Checkbox } from '../index';
 import PropTypes from 'prop-types';
+import './Form.scss';
 
 class Form extends Component {
     
@@ -25,12 +26,13 @@ class Form extends Component {
         this.setOnComponentChange = this.setOnComponentChange.bind(this);
         this.setInitial = this.setInitial.bind(this);
         this.setSubmitAs = this.setSubmitAs.bind(this);
+        this.buildWithStructure = this.buildWithStructure.bind(this);
     }
     
     render(){
         return(
             <form name={this.props.name}
-                  className={'composable-form ' + (this.props.customClassName)}
+                  className={'composable-form ' + (this.props.structure && !this.props.noStyle ? 'styled ' : '') + (this.props.customClassName)}
                   onSubmit={(event) => this.handleSubmit(event)}
                   onReset={(event) => this.handleReset(event)}>
               {this.attachInputHandlers(this.props.children)}
@@ -80,7 +82,7 @@ class Form extends Component {
     }
 
     attachInputHandlers(children) {
-      return React.Children.map(children, (child) => {
+      let torender = React.Children.map(children, (child) => {
         if (!child) return;
         else {
           if (!child.props) return child;
@@ -93,21 +95,27 @@ class Form extends Component {
           } else if (child.props.children) {
             child = React.cloneElement(child, child.props, this.attachInputHandlers(child.props.children));
           }
+        }
 
-          if(child.props.label) {
-            return (
-            <Label labelClass={child.props.label.labelClass}
+        if(child.props.label) {
+          return (
+            <Label labelClass={(child.props.label.labelClass || '') + (child.type === Checkbox ? ' checkbox-label' : '')}
                    textClass={child.props.label.textClass}
                    text={child.props.label.text}
-                    >
+            >
               {child}
             </Label>
-            )
-          } else {
-            return child;
-          }
+          )
+        } else {
+          return child;
         }
       });
+
+      if(this.props.structure) {
+        return this.buildWithStructure(torender);
+      } else {
+        return torender;
+      }
     }
 
     setSubmitAs(submitAs, name) {
@@ -176,11 +184,34 @@ class Form extends Component {
       }
     }
 
+    buildWithStructure(children) {
+      let torender = [];
+      children = React.Children.toArray(children);
+      let counter = 0;
+      for(let thing of this.props.structure) {
+        let row = [];
+        if(Number.isInteger(thing)){
+          for(let i = 0; i < thing; i++) {
+            let child = children.shift();
+            row.push(React.cloneElement(child, { size: thing, ...child.props }));
+          }
+          torender.push(<div className="form-row" key={'structure-' + counter}>{row}</div>);
+        } else {
+          let child = children.shift();
+          child = React.cloneElement(child, { structure: thing, thisKey: counter, key: 'structure-' + counter,  ...child.props });
+          torender.push(child);
+        }
+        counter++;
+      }
+      return torender;
+    }
+
 }
 
 Form.defaultProps = {
   customClassName: '',
-  initialValues: {}
+  initialValues: {},
+  structure: false
 };
 
 Form.propTypes = {

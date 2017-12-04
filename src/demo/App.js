@@ -1,4 +1,4 @@
-import Form, { Button, Checkbox, Duplicator, FormSection, Text, Select } from '../lib';
+import Form, { Button, Checkbox, Duplicator, FormSection, Select, Text, Textarea } from '../lib';
 import React, { Component } from 'react';
 class App extends Component {
 
@@ -8,40 +8,47 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{
+        width: 700,
+        marginLeft: 'auto',
+        marginRight: 'auto'
+      }}>
         <Form onSubmit={console.log}
-              initialValues={{ 'duplicator-test': [{ 'duplicator-text': 'aa' }, { 'duplicator-text-1':'bb' }], 'section-test': { 'text-section-test': 'aaa' }}}
-
+              structure={[1, 2, 1, [2], [2, 1], 1, 1]}
         >
-          <Select name="test"
-                  options={[{
-                    value: 0,
-                    text: 'asd'
-                  }]}
-                  />
-          <Duplicator name="duplicator-test" pressToAdd={true}>
-            <Text name="duplicator-text"/>
-            <Text name="duplicator-text-1"/>
+          <Select name="select-1" options={[
+            {
+              text:'a',
+              value:1
+            }, {
+              text:'b',
+              value:2
+            }, {
+              text:'c',
+              value:3
+            }, {
+              text:'d',
+              value:4
+            }
+          ]
+
+          }
+          label={{ text: 'Select One' }}/>
+          <Text name="text-2" label={{ text: 'Enter' }}/>
+          <Text name="text-3" label={{ text: 'Enter' }}/>
+          <Textarea name="text-4" label={{ text: 'Enter' }}/>
+          <Duplicator name="dup-1">
+            <Text name="asd" label={{ text: 'Enter' }}/>
+            <Text name="asd-2"/>
           </Duplicator>
-          <FormSection name="section-test">
-            <Text name="text-section-test"
-                  label={{ text: 'label-test' }}
-            />
-            <Text name="text-section-test-1"/>
-            <Checkbox name="checkbox-section-test"/>
-            <FormSection name="section-section">
-              <Text name="asd"/>
-            </FormSection>
+          <FormSection name="fs-1">
+            <Text name="text-6" label={{ text: 'Enter' }}/>
+            <Text name="text-7"/>
+            <Text name="asd"/>
           </FormSection>
-          <Text name="text-test"
-                  label={{ text: 'label-test' }}/>
-          <Checkbox name="checkbox-test"/>
+          <Checkbox name="check" label={{ text: 'Enter' }}/>
           <Button submit={true}/>
-          <Button reset={true}/>
         </Form>
-        <FormSection name="asd" noForm values={{}} onChange={()=>{}}>
-          <Text name="asd"/>
-        </FormSection>
       </div>
     );
   }

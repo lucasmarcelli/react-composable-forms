@@ -5,11 +5,16 @@ import { validateOutOfForm } from '../Helpers/formUtils';
 class Text extends Component {
 
   render() {
+    let style = {};
+    if(this.props.size) {
+      style.width = (100/this.props.size) +'%';
+    }
     return <input name={this.props.name}
                   type="text"
                   className={'form-input ' + this.props.customClassName}
                   value={this.props.value}
                   placeholder={this.props.placeholder}
+                  style={style}
                   onChange={(event) => this.props.onChange({
                     updated: {
                       [event.target.name]: event.target.value

@@ -1,0 +1,10 @@
+.form-select {
+  &.multi-select{
+    padding: 10px 5px;
+    height: 100%;
+  }
+  @include standardUI(29px);
+
+  background-color: white;
+}
+

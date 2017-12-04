@@ -1,0 +1,23 @@
+
+.form-label.checkbox-label {
+  flex-direction: row;
+  padding-top: 6px;
+  padding-bottom: 6px;
+
+  .form-label-text {
+    margin-right: 5px;
+  }
+}
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+
+  .form-label-text {
+    margin-left: 3px;
+    margin-bottom: 2px;
+  }
+}
+

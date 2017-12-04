@@ -6,11 +6,16 @@ import { validateOutOfForm } from '../Helpers/formUtils';
 class Textarea extends Component {
 
   render() {
+    let style = {};
+    if(this.props.size) {
+      style.width = (100/this.props.size) +'%';
+    }
     return (
       <textarea className={'form-textarea ' + (this.props.customClassName)}
                 value={this.props.value}
                 name={this.props.name}
                 placeholder={this.props.placeholder}
+                style={style}
                 onChange={(event) => this.props.onChange({
                   updated: {
                     [event.target.name]: event.target.value

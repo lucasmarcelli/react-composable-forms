@@ -12,12 +12,17 @@ class Select extends Component {
   }
 
   render() {
+    let style = {};
+    if(this.props.size) {
+      style.width = (100/this.props.size) +'%';
+    }
     return (
-      <select className={'form-select ' + this.props.customClassName}
+      <select className={'form-select ' + (this.props.multiple ? 'multi-select ' : '') + this.props.customClassName}
               name={this.props.name}
               value={this.props.value}
               onChange={(event) => this.handleChange(event)}
-              multiple={this.props.multiple}>
+              multiple={this.props.multiple}
+              style={style}>
         {(this.props.multiple || this.props.noDefault) ? null : <option value={this.props.defaultVal}>{this.props.defaultText}</option>}
         {this.renderOptions()}
       </select>
