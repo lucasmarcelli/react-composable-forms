@@ -130,7 +130,8 @@ class Form extends Component {
       const props = {
         onChange: this.handleChange,
         [value]: this.state.values[child.props.name],
-        setInitial: this.setInitial
+        setInitial: this.setInitial,
+        noForm: false
       };
       return (React.cloneElement(child, props));
     }
@@ -142,7 +143,8 @@ class Form extends Component {
       let value = child.props.valueKey || 'value';
       const props = {
         onChange: this.handleChange,
-        [value]: (this.state.values[child.props.name] || '')
+        [value]: (this.state.values[child.props.name] || ''),
+        noForm: false
       };
       return (React.cloneElement(child, props));
     }
@@ -154,7 +156,8 @@ class Form extends Component {
       let value = child.props.valueKey || 'value';
       const props = {
         onClick: this.handleChange,
-        [value]: (this.state.values[child.props.name] || '')
+        [value]: (this.state.values[child.props.name] || ''),
+        noForm: false
       };
       return (React.cloneElement(child, props));
     }

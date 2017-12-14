@@ -1,4 +1,4 @@
-import Form, { Button, Checkbox, Date, Duplicator, Email, FormSection, Select, Text, Textarea } from '../lib';
+import Form, { Button, Checkbox, Date, Duplicator, Email, FormSection, Num, Select, Text, Textarea } from '../lib';
 import React, { Component } from 'react';
 class App extends Component {
 
@@ -14,9 +14,8 @@ class App extends Component {
         marginRight: 'auto'
       }}>
         <Form onSubmit={console.log}
-              structure={[3, 1, null, 2, 1]}
+              structure={[2, 1, null, 2, 1]}
         >
-          <Date name="date-1"/>
           <Email name="email"/>
           <Text name="text-2" label={{ text: 'Enter' }}/>
           <Text name="text-3" label={{ text: 'Enter' }}/>

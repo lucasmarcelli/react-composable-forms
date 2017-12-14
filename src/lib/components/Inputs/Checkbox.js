@@ -38,7 +38,6 @@ Checkbox.propTypes = {
 
   checked: (props, propname, component) => {
     if(props.checked === undefined && props.noForm){
-      console.log(props.checked)
       return new Error(component + ' requires the prop ' + propname + ' if not handled by a form component. Validation Failed.')
     }
   },

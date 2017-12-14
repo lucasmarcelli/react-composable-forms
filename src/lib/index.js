@@ -6,6 +6,7 @@ import Email from './components/Inputs/Email';
 import Form from './components/Form';
 import FormSectionTemplate from './components/Structure/FormSection';
 import Label from './components/Structure/Label';
+import Num from './components/Inputs/Num';
 import Select from './components/Inputs/Select';
 import Text from './components/Inputs/Text';
 import Textarea from './components/Inputs/Textarea';
@@ -22,6 +23,7 @@ export {
   Email,
   FormSection,
   Label,
+  Num,
   Select,
   Text,
   Textarea
