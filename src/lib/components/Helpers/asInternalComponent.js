@@ -90,8 +90,10 @@ const asInternalComponent = (Custom, { maintainState = false, customName = false
           torender.push(<div className="form-row" key={'structure-' + counter}>{row}</div>);
         } else {
           let child = children.shift();
-          child = React.cloneElement(child, { structure: thing, ...child.props });
-          torender.push(child);
+          if(child){
+            child = React.cloneElement(child, { structure: thing, ...child.props });
+            torender.push(child);
+          }
         }
         counter++;
       }
@@ -159,7 +161,7 @@ const asInternalComponent = (Custom, { maintainState = false, customName = false
       let value = child.props.valueKey || 'value';
       const props = {
         onChange: this.handleChange,
-        [value]: this.props.values[child.props.name]
+        [value]: this.props.values[child.props.name] || ''
       };
       return (React.cloneElement(child, props));
     }
@@ -171,7 +173,7 @@ const asInternalComponent = (Custom, { maintainState = false, customName = false
       let value = child.props.valueKey || 'value';
       const props = {
         onClick: this.handleChange,
-        [value]: this.props.values[child.props.name]
+        [value]: this.props.values[child.props.name] || ''
       };
       return (React.cloneElement(child, props));
     }

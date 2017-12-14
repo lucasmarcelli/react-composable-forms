@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Label, Checkbox } from '../index';
+import { Checkbox, Label } from '../index';
 import PropTypes from 'prop-types';
 import './Form.scss';
 
@@ -142,7 +142,7 @@ class Form extends Component {
       let value = child.props.valueKey || 'value';
       const props = {
         onChange: this.handleChange,
-        [value]: this.state.values[child.props.name]
+        [value]: (this.state.values[child.props.name] || '')
       };
       return (React.cloneElement(child, props));
     }
@@ -154,7 +154,7 @@ class Form extends Component {
       let value = child.props.valueKey || 'value';
       const props = {
         onClick: this.handleChange,
-        [value]: this.state.values[child.props.name]
+        [value]: (this.state.values[child.props.name] || '')
       };
       return (React.cloneElement(child, props));
     }

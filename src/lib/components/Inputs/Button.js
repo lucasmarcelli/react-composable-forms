@@ -6,7 +6,7 @@ class Button extends Component {
   render() {
     let style = {};
     if(this.props.size) {
-      style.maxWidth = (100/this.props.size)/this.props.size +'%';
+      style.width = (100/this.props.size)/this.props.size +'%';
     }
     return (
       <button name={this.props.name}

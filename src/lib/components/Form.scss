@@ -22,9 +22,7 @@
 
   .form-section.form-row {
     flex-wrap: wrap;
-    .form-row {
-      flex-wrap: nowrap;
-    }
+
   }
 
   .form-duplicator.form-row {
@@ -36,7 +34,7 @@
 
   @import "Structure/Label";
   @import "Inputs/Sass/Button";
-  @import "Inputs/Sass/Text";
+  @import "Inputs/Sass/Input";
   @import "Inputs/Sass/Select";
   @import "Inputs/Sass/Textarea";
   @import "Inputs/Sass/Checkbox";

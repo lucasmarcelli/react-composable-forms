@@ -28,7 +28,7 @@ const validateOutOfForm = (props, propname, component, type, compare) => {
   if(props.noForm) {
     if(!props[propname]){
       return new Error(component + ' requires the prop ' + propname + ' if not handled by a form component. Validation Failed.')
-    } else if((type && props[propname].constructor.name !== type || (compare && props[propname].constructor.name !== compare))) {
+    } else if(props[propname].constructor.name !== type || (compare && props[propname].constructor.name !== compare)) {
       return new Error(component + ' requires the prop ' + propname + ' as a(n) ' + (type ? type : compare) + ' if not handled by a form component. Validation Failed.')
     }
   }

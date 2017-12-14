@@ -1,5 +1,6 @@
 import Button from './components/Inputs/Button';
 import Checkbox from './components/Inputs/Checkbox';
+import Date from './components/Inputs/Date';
 import Duplicator from './components/Structure/Duplicator';
 import Form from './components/Form';
 import FormSectionTemplate from './components/Structure/FormSection';
@@ -14,6 +15,7 @@ const FormSection = asInternalComponent(FormSectionTemplate);
 export default Form;
 export {
   Button,
+  Date,
   Duplicator,
   Checkbox,
   FormSection,
