@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import PropTypes from 'prop-types';
+
+import moment from 'moment';
+
 import { validateOutOfForm } from '../Helpers/formUtils';
 
 
@@ -49,9 +51,9 @@ Date.defaultProps = {
 
 Date.propTypes = {
   name: PropTypes.string.isRequired,
-  value: (props, propname, component) => {if(props[propname].constructor.name !== 'Moment') return new Error('Value must be a moment. Pass an invalid moment object for an empty field.')},
+  value: (props, propname) => {if(props[propname].constructor.name !== 'Moment') return new Error('Value must be a moment. Pass an invalid moment object for an empty field.')},
   onChange: (props, propname, component) => validateOutOfForm(props, propname, component, 'Function'),
-  emptyValue: (props, propname, component) => {if(props[propname].constructor.name !== 'Moment') return new Error('emptyValue must be a moment. Pass an invalid moment object for an empty field.')},
+  emptyValue: (props, propname) => {if(props[propname].constructor.name !== 'Moment') return new Error('emptyValue must be a moment. Pass an invalid moment object for an empty field.')},
 
   placeholder: PropTypes.string,
   customClassName: PropTypes.string,

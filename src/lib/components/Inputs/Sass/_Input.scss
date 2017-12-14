@@ -1,3 +1,8 @@
-input[type=text].form-input, input[type=date].form-input  {
+input[type] {
   @include standardUI();
+}
+
+input[type=date] {
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
