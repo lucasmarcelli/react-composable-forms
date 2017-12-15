@@ -191,7 +191,7 @@ const asInternalComponent = (Custom, { maintainState = false, customName = false
   CustomComponent.propTypes = {
     name: PropTypes.string.isRequired,
     attachOnComponentChange: PropTypes.bool.isRequired,
-    emptyValue: PropTypes.object.isRequired,
+    emptyValue: PropTypes.any.isRequired,
 
     values: (props, propname, component) => validateOutOfForm(props, propname, component, null, props.emptyValue.constructor.name),
     onChange: (props, propname, component) => validateOutOfForm(props, propname, component, 'Function'),

@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { Checkbox, Label } from '../index';
-import PropTypes from 'prop-types';
 import './Form.scss';
+import { Checkbox, Label } from '../index';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ErrorBoundary from './Helpers/ErrorBoundary';
 
 class Form extends Component {
     
@@ -25,18 +26,19 @@ class Form extends Component {
         this.buildInitial = this.buildInitial.bind(this);
         this.setOnComponentChange = this.setOnComponentChange.bind(this);
         this.setInitial = this.setInitial.bind(this);
-        this.setSubmitAs = this.setSubmitAs.bind(this);
         this.buildWithStructure = this.buildWithStructure.bind(this);
     }
-    
+
     render(){
         return(
+          <ErrorBoundary>
             <form name={this.props.name}
                   className={'composable-form ' + (this.props.structure && !this.props.noStyle ? 'styled ' : '') + (this.props.customClassName)}
                   onSubmit={(event) => this.handleSubmit(event)}
                   onReset={(event) => this.handleReset(event)}>
               {this.attachInputHandlers(this.props.children)}
             </form>
+          </ErrorBoundary>
         )
     }
 
@@ -118,10 +120,6 @@ class Form extends Component {
       }
     }
 
-    setSubmitAs(submitAs, name) {
-      // console.log(submitAs, name);
-    }
-
     setOnComponentChange(child) {
       if(!this.state || !this.state.values || this.state.values[child.props.name] === undefined ) {
         return new Error('The state of the form does not match the rendered child ' + child.props.name);
@@ -130,8 +128,7 @@ class Form extends Component {
       const props = {
         onChange: this.handleChange,
         [value]: this.state.values[child.props.name],
-        setInitial: this.setInitial,
-        noForm: false
+        setInitial: this.setInitial
       };
       return (React.cloneElement(child, props));
     }
@@ -143,8 +140,7 @@ class Form extends Component {
       let value = child.props.valueKey || 'value';
       const props = {
         onChange: this.handleChange,
-        [value]: (this.state.values[child.props.name] || ''),
-        noForm: false
+        [value]: (this.state.values[child.props.name] || '')
       };
       return (React.cloneElement(child, props));
     }
@@ -156,8 +152,7 @@ class Form extends Component {
       let value = child.props.valueKey || 'value';
       const props = {
         onClick: this.handleChange,
-        [value]: (this.state.values[child.props.name] || ''),
-        noForm: false
+        [value]: (this.state.values[child.props.name] || '')
       };
       return (React.cloneElement(child, props));
     }

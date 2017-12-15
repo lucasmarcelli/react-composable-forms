@@ -6,3 +6,19 @@ input[type=date] {
   padding-top: 1px;
   padding-bottom: 1px;
 }
+
+.radio-group {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+label {
+  input[type=radio] {
+    width: auto;
+  }
+}
+
+input[type=radio] {
+  width: 100%;
+}

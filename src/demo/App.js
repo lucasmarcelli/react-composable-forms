@@ -1,5 +1,7 @@
-import Form, { Button, Checkbox, Date, Duplicator, Email, FormSection, Num, Select, Text, Textarea } from '../lib';
+import Form, { Button, Checkbox, Duplicator, Email, FormSection, MomentDate, Num, Password, RadioGroup, Select, Text, Textarea } from '../lib';
 import React, { Component } from 'react';
+import Date from '../lib/components/Inputs/Date';
+import ErrorBoundary from '../lib/components/Helpers/ErrorBoundary';
 class App extends Component {
 
   constructor(props) {
@@ -13,20 +15,30 @@ class App extends Component {
         marginLeft: 'auto',
         marginRight: 'auto'
       }}>
+        <ErrorBoundary>
         <Form onSubmit={console.log}
-              structure={[2, 1, null, 2, 1]}
+              structure={[[2, 1], 1, null, 1]}
         >
-          <Email name="email"/>
-          <Text name="text-2" label={{ text: 'Enter' }}/>
-          <Text name="text-3" label={{ text: 'Enter' }}/>
-          <Textarea name="text-4" label={{ text: 'Enter' }}/>
-          <Duplicator name="dup-1">
-            <Text name="asd" label={{ text: 'Enter' }}/>
-            <Text name="asd-2"/>
+          <RadioGroup name="radio" radios={[
+            {
+              value: '1'
+            },
+            {
+              label: { text: 'Click 2' },
+              value: '2'
+            },
+            {
+              label: { text: 'Click 23' },
+              value: '3'
+            }
+          ]} />
+          <Date name="date"/>
+          <Duplicator name={'asd'}>
+            <Textarea name="asdsss"/>
           </Duplicator>
-          <Checkbox name="check" label={{ text: 'Enter' }}/>
           <Button submit={true}/>
         </Form>
+        </ErrorBoundary>
       </div>
     );
   }
