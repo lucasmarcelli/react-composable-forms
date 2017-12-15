@@ -1,6 +1,6 @@
 {
   "name": "react-composable-forms",
-  "version": "0.7.95",
+  "version": "0.7.98",
   "description": "Composable forms for react.",
   "main": "build/index.js",
   "repository": "git@github.com:lucasmarcelli/react-composable-forms.git",
@@ -59,9 +59,7 @@
   "dependencies": {
     "prop-types": "^15.6.0"
   },
-  "optionalDependencies": {
-    "moment": "^2.19.4"
-  },
+  "optionalDependencies": {},
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
