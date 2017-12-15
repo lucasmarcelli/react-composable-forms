@@ -1,6 +1,6 @@
 {
   "name": "react-composable-forms",
-  "version": "0.7.98",
+  "version": "0.7.109",
   "description": "Composable forms for react.",
   "main": "build/index.js",
   "repository": "git@github.com:lucasmarcelli/react-composable-forms.git",
@@ -54,7 +54,8 @@
   },
   "peerDependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "moment": "^2.19.4"
   },
   "dependencies": {
     "prop-types": "^15.6.0"

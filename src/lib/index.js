@@ -5,7 +5,7 @@ import Email from './components/Inputs/Email';
 import Form from './components/Form';
 import FormSectionTemplate from './components/Structure/FormSection';
 import Label from './components/Structure/Label';
-import MomentDate from './components/Inputs/Date';
+import Date from './components/Inputs/Date';
 import Num from './components/Inputs/Num';
 import Password from './components/Inputs/Password';
 import RadioGroupTemplate from './components/Inputs/RadioGroup';
@@ -22,7 +22,7 @@ export {
   Button,
   Checkbox,
   Duplicator,
-  MomentDate,
+  Date,
   Email,
   FormSection,
   Label,
